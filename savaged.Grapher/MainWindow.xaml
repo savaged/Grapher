@@ -1,0 +1,42 @@
+﻿<Window x:Class="savaged.Grapher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:savaged.Grapher"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="190"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <WrapPanel>
+                <TextBlock Width="80" Margin="5">Function</TextBlock>
+                <ComboBox Width="100"                           
+                          DisplayMemberPath="Key"
+                          SelectedValuePath="Value" 
+                          ItemsSource="{Binding Curve.Functions}"
+                          SelectedValue="{Binding Curve.SelectedFunc}"/>
+            </WrapPanel>
+            <WrapPanel>
+                <TextBlock Width="80" Margin="5">Start</TextBlock>
+                <TextBox Width="100" Text="{Binding Curve.Start}"/>
+            </WrapPanel>
+            <WrapPanel>
+                <TextBlock Width="80" Margin="5">End</TextBlock>
+                <TextBox Width="100" Text="{Binding Curve.End}"/>
+            </WrapPanel>
+            <WrapPanel>
+                <TextBlock Width="80" Margin="5">Increment</TextBlock>
+                <TextBox Width="100" Text="{Binding Curve.Increment}"/>
+            </WrapPanel>
+            <Button Command="{Binding ShowCmd}" 
+                    Margin="10" Width="80"
+                    HorizontalAlignment="Left">Submit</Button>
+        </StackPanel>
+        <oxy:PlotView Grid.Column="1" Model="{Binding Curve.PlotModel}"/>
+    </Grid>
+</Window>
