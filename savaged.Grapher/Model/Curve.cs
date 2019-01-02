@@ -4,6 +4,7 @@ using OxyPlot.Series;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace savaged.Grapher.Model
 {
@@ -14,37 +15,49 @@ namespace savaged.Grapher.Model
         private double _increment;
         private PlotModel _plotModel;
         private Func<double, double> _selectedFunc;
+        private string _title;
+
+        private Func<double, double> Add => (x) => x + Increment;
+        private Func<double, double> Div => (x) => x / (Increment == 0 ? Increment : ulong.MinValue);
+        private Func<double, double> Mod => (x) => x % Increment;
+        private Func<double, double> Mul => (x) => x * Increment;
+        private Func<double, double> Pow => (x) => Math.Pow(x, Increment);
+        private Func<double, double> Sub => (x) => x - Increment;
 
         public Curve()
         {
             _start = 0;
-            _end = 10;
-            _increment = 0.1;
+            _end = 1000;
+            _increment = Math.E;
 
             PlotModel = new PlotModel();
 
             Functions = new Dictionary<string, Func<double, double>>
             {
-
                 { nameof(Math.Abs), Math.Abs },
                 { nameof(Math.Acos), Math.Acos },
+                { nameof(Add), Add },
                 { nameof(Math.Asin), Math.Asin },
                 { nameof(Math.Atan), Math.Atan },
                 { nameof(Math.Ceiling), Math.Ceiling },
                 { nameof(Math.Cos), Math.Cos },
                 { nameof(Math.Cosh), Math.Cosh },
+                { nameof(Div), Div },
                 { nameof(Math.Exp), Math.Exp },
                 { nameof(Math.Floor), Math.Floor },
                 { nameof(Math.Log), Math.Log },
                 { nameof(Math.Log10), Math.Log10 },
+                { nameof(Mod), Mod },
+                { nameof(Mul), Mul },
+                { nameof(Pow), Pow },
                 { nameof(Math.Sin), Math.Sin },
                 { nameof(Math.Sinh), Math.Sinh },
                 { nameof(Math.Sqrt), Math.Sqrt },
+                { nameof(Sub), Sub },
                 { nameof(Math.Tan), Math.Tan },
                 { nameof(Math.Tanh), Math.Tanh }
             };
             SelectedFunc = Functions.Values.First();
-
             SetFunctionSeries();
         }
 
@@ -62,14 +75,15 @@ namespace savaged.Grapher.Model
             set
             {
                 Set(ref _selectedFunc, value);
-                PlotModel.Title = Functions.Where(i => i.Value == value).First().Key;
+                _title = Functions.Where(i => i.Value == value).First().Key;
+                PlotModel.Title = _title;
                 RaisePropertyChanged(nameof(PlotModel.Title));
             }
         }
 
         public void Refresh()
         {
-            PlotModel = new PlotModel();
+            PlotModel = new PlotModel { Title = _title };
             SetFunctionSeries();
             PlotModel.InvalidatePlot(true);
         }
@@ -94,12 +108,20 @@ namespace savaged.Grapher.Model
 
         private void SetFunctionSeries()
         {
-            PlotModel.Series.Add(new FunctionSeries(
-                SelectedFunc,
-                Start,
-                End,
-                Increment,
-                $"{PlotModel.Title}(x)"));
+            try
+            {
+                PlotModel.Series.Add(new FunctionSeries(
+                    SelectedFunc,
+                    Start,
+                    End,
+                    Increment,
+                    $"{PlotModel.Title}(x)"));
+            }
+            catch (OutOfMemoryException)
+            {
+                MessageBox.Show(
+                    "Oops! That's too much for me to handle!");
+            }
         }
     }
 }
