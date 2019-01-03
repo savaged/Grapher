@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Windows;
+using OxyPlot.Axes;
 
 namespace savaged.Grapher.Model
 {
@@ -26,9 +27,9 @@ namespace savaged.Grapher.Model
 
         public Curve()
         {
-            _start = 0;
-            _end = 1000;
-            _increment = Math.E;
+            _start = -10;
+            _end = 10;
+            _increment = 0.1;
 
             PlotModel = new PlotModel();
 
@@ -84,7 +85,7 @@ namespace savaged.Grapher.Model
         public void Refresh()
         {
             PlotModel = new PlotModel { Title = _title };
-            SetFunctionSeries();
+            SetupGraph();
             PlotModel.InvalidatePlot(true);
         }
 
@@ -104,6 +105,31 @@ namespace savaged.Grapher.Model
         {
             get => _increment;
             set => Set(ref _increment, value);
+        }
+
+        private void SetupGraph()
+        {
+            SetAxes();
+            SetFunctionSeries();
+        }
+
+        private void SetAxes()
+        {
+            // TODO make min & max available as properties on the UI
+            var yAxis = new LinearAxis
+            {
+                Position = AxisPosition.Left,
+                Minimum = -10,
+                Maximum = 10
+            };
+            var xAxis = new LinearAxis
+            {
+                Position = AxisPosition.Bottom,
+                Minimum = -10,
+                Maximum = 10
+            };
+            _plotModel.Axes.Add(yAxis);
+            _plotModel.Axes.Add(xAxis);
         }
 
         private void SetFunctionSeries()

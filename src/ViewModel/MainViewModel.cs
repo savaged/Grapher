@@ -1,6 +1,5 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using OxyPlot.Series;
 using savaged.Grapher.Model;
 
 namespace savaged.Grapher.ViewModel
