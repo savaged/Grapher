@@ -11,9 +11,14 @@ namespace savaged.Grapher.Model
 {
     public class Curve : ObservableObject
     {
+        private double _increment;
+        private double _yAxisStart;
+        private double _yAxisEnd;
+        private double _xAxisStart;
+        private double _xAxisEnd;
         private double _start;
         private double _end;
-        private double _increment;
+        private double _radius;
         private PlotModel _plotModel;
         private Func<double, double> _selectedFunc;
         private string _title;
@@ -24,12 +29,17 @@ namespace savaged.Grapher.Model
         private Func<double, double> Mul => (x) => x * Increment;
         private Func<double, double> Pow => (x) => Math.Pow(x, Increment);
         private Func<double, double> Sub => (x) => x - Increment;
+        private Func<double, double> Rad => (x) => (Math.PI * x) / 180;
+        private Func<double, double> Cir => Circle;
 
         public Curve()
         {
-            _start = -10;
-            _end = 10;
-            _increment = 0.1;
+            YAxisStart = XAxisStart = 0;
+            YAxisEnd = XAxisEnd = 5;
+            Start = 0;
+            End = 5;
+            Increment = 0.1;
+            Radius = (XAxisEnd - XAxisStart) / 2;
 
             PlotModel = new PlotModel();
 
@@ -41,6 +51,7 @@ namespace savaged.Grapher.Model
                 { nameof(Math.Asin), Math.Asin },
                 { nameof(Math.Atan), Math.Atan },
                 { nameof(Math.Ceiling), Math.Ceiling },
+                { nameof(Cir), Cir },
                 { nameof(Math.Cos), Math.Cos },
                 { nameof(Math.Cosh), Math.Cosh },
                 { nameof(Div), Div },
@@ -51,6 +62,7 @@ namespace savaged.Grapher.Model
                 { nameof(Mod), Mod },
                 { nameof(Mul), Mul },
                 { nameof(Pow), Pow },
+                { nameof(Rad), Rad },
                 { nameof(Math.Sin), Math.Sin },
                 { nameof(Math.Sinh), Math.Sinh },
                 { nameof(Math.Sqrt), Math.Sqrt },
@@ -107,6 +119,34 @@ namespace savaged.Grapher.Model
             set => Set(ref _increment, value);
         }
 
+        public double YAxisStart
+        {
+            get => _yAxisStart;
+            set => Set(ref _yAxisStart, value);
+        }
+        public double YAxisEnd
+        {
+            get => _yAxisEnd;
+            set => Set(ref _yAxisEnd, value);
+        }
+
+        public double XAxisStart
+        {
+            get => _xAxisStart;
+            set => Set(ref _xAxisStart, value);
+        }
+        public double XAxisEnd
+        {
+            get => _xAxisEnd;
+            set => Set(ref _xAxisEnd, value);
+        }
+
+        public double Radius
+        {
+            get => _radius;
+            set => Set(ref _radius, value);
+        }
+
         private void SetupGraph()
         {
             SetAxes();
@@ -115,18 +155,17 @@ namespace savaged.Grapher.Model
 
         private void SetAxes()
         {
-            // TODO make min & max available as properties on the UI
             var yAxis = new LinearAxis
             {
                 Position = AxisPosition.Left,
-                Minimum = -10,
-                Maximum = 10
+                Minimum = YAxisStart,
+                Maximum = YAxisEnd
             };
             var xAxis = new LinearAxis
             {
                 Position = AxisPosition.Bottom,
-                Minimum = -10,
-                Maximum = 10
+                Minimum = XAxisStart,
+                Maximum = XAxisEnd
             };
             _plotModel.Axes.Add(yAxis);
             _plotModel.Axes.Add(xAxis);
@@ -148,6 +187,13 @@ namespace savaged.Grapher.Model
                 MessageBox.Show(
                     "Oops! That's too much for me to handle!");
             }
+        }
+
+        private double Circle(double degree)
+        {
+            // TODO Lots to do here. Anyone interested in coding this for us?
+            var x = Radius * Math.Cos(degree);
+            return x;
         }
     }
 }

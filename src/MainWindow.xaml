@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:savaged.Grapher"
         xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="800">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="190"/>
@@ -33,9 +33,30 @@
                 <TextBlock Width="80" Margin="5">Increment</TextBlock>
                 <TextBox Width="100" Text="{Binding Curve.Increment}"/>
             </WrapPanel>
+            <Separator/>
+            <WrapPanel>
+                <TextBlock Width="80" Margin="5">Y Axis Start</TextBlock>
+                <TextBox Width="100" Text="{Binding Curve.YAxisStart}"/>
+            </WrapPanel>
+            <WrapPanel>
+                <TextBlock Width="80" Margin="5">Y Axis End</TextBlock>
+                <TextBox Width="100" Text="{Binding Curve.YAxisEnd}"/>
+            </WrapPanel>
+            <WrapPanel>
+                <TextBlock Width="80" Margin="5">X Axis Start</TextBlock>
+                <TextBox Width="100" Text="{Binding Curve.XAxisStart}"/>
+            </WrapPanel>
+            <WrapPanel>
+                <TextBlock Width="80" Margin="5">X Axis End</TextBlock>
+                <TextBox Width="100" Text="{Binding Curve.XAxisEnd}"/>
+            </WrapPanel>
+            <WrapPanel>
+                <TextBlock Width="80" Margin="5">Radius</TextBlock>
+                <TextBox Width="100" Text="{Binding Curve.Radius}"/>
+            </WrapPanel>
             <Button Command="{Binding ShowCmd}" 
                     Margin="10" Width="80"
-                    HorizontalAlignment="Left">Submit</Button>
+                    HorizontalAlignment="Left">Plot</Button>
         </StackPanel>
         <oxy:PlotView Grid.Column="1" Model="{Binding Curve.PlotModel}"/>
     </Grid>
