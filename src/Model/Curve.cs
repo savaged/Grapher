@@ -189,11 +189,14 @@ namespace savaged.Grapher.Model
             }
         }
 
-        private double Circle(double degree)
+        private double Circle(double x)
         {
             // TODO Lots to do here. Anyone interested in coding this for us?
-            var x = Radius * Math.Cos(degree);
-            return x;
+            var hypotenuseSquared = Math.Pow(Radius, 2);
+            var adjacentSquared = Math.Pow(x, 2);
+            var oppositeSquared = hypotenuseSquared - adjacentSquared;
+            var y = Math.Sqrt(oppositeSquared);
+            return y;
         }
     }
 }
