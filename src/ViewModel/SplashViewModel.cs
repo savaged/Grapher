@@ -7,7 +7,7 @@ namespace savaged.Grapher.ViewModel
     {
         public SplashViewModel()
         {
-            Circle = new Circle();
+            Circle = new Circle(20, 30, 50);
         }
 
         public Circle Circle { get; }

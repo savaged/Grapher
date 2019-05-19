@@ -12,25 +12,18 @@ namespace savaged.Grapher.Model
         private readonly double _circleCentreY;
         private readonly double _radius;
 
-        public Circle()
-        {
-            _circleCentreX = 2;
-            _circleCentreY = 3;
-            _radius = 5;
-
-            var lineSeries = GetLineSeries();
-            PlotModel = new PlotModel();
-            PlotModel.Series.Add(lineSeries);
-        }
-
         public Circle(
             double circleCentreX,
             double circleCentreY,
-            double radius) : this()
+            double radius)
         {
             _circleCentreX = circleCentreX;
             _circleCentreY = circleCentreY;
             _radius = radius;
+
+            var lineSeries = GetLineSeries();
+            PlotModel = new PlotModel();
+            PlotModel.Series.Add(lineSeries);
         }
 
         public PlotModel PlotModel { get; }
@@ -47,7 +40,7 @@ namespace savaged.Grapher.Model
         {
             var points = new List<DataPoint>();
 
-            double step = 2 * Math.PI / 20;
+            double step = 2 * Math.PI / 60;
             double theta = 0;
             double h = _circleCentreX;
             double k = _circleCentreY;
