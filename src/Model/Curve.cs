@@ -30,7 +30,7 @@ namespace savaged.Grapher.Model
         private Func<double, double> Pow => (x) => Math.Pow(x, Increment);
         private Func<double, double> Sub => (x) => x - Increment;
         private Func<double, double> Rad => (x) => (Math.PI * x) / 180;
-        private Func<double, double> Cir => Circle;
+        private Func<double, double> Arch => QuarterCircle;
 
         public Curve()
         {
@@ -48,10 +48,10 @@ namespace savaged.Grapher.Model
                 { nameof(Math.Abs), Math.Abs },
                 { nameof(Math.Acos), Math.Acos },
                 { nameof(Add), Add },
+                { nameof(Arch), Arch },
                 { nameof(Math.Asin), Math.Asin },
                 { nameof(Math.Atan), Math.Atan },
                 { nameof(Math.Ceiling), Math.Ceiling },
-                { nameof(Cir), Cir },
                 { nameof(Math.Cos), Math.Cos },
                 { nameof(Math.Cosh), Math.Cosh },
                 { nameof(Div), Div },
@@ -189,9 +189,8 @@ namespace savaged.Grapher.Model
             }
         }
 
-        private double Circle(double x)
+        private double QuarterCircle(double x)
         {
-            // TODO Lots to do here. Anyone interested in coding this for us?
             var hypotenuseSquared = Math.Pow(Radius, 2);
             var adjacentSquared = Math.Pow(x, 2);
             var oppositeSquared = hypotenuseSquared - adjacentSquared;

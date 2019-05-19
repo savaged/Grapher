@@ -1,25 +1,27 @@
 ﻿using savaged.Grapher.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 
 namespace savaged.Grapher
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            var splashWin = new Splash
+            {
+                DataContext = new SplashViewModel()
+            };
+            splashWin.Show();
+            Thread.Sleep(5000);
+            
             var mainWin = new MainWindow
             {
                 DataContext = new MainViewModel()
             };
+
+            splashWin.Hide();
+
             mainWin.Show();
         }
     }

@@ -1,0 +1,19 @@
+﻿<Window x:Class="savaged.Grapher.Splash"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        Title="Splash" Height="450" Width="450">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Panel.ZIndex="1">
+            <TextBlock FontSize="24">Grapher</TextBlock>
+            <TextBlock HorizontalAlignment="Right">savaged</TextBlock>
+        </StackPanel>
+        <oxy:PlotView Model="{Binding Circle.PlotModel}"/>
+    </Grid>
+</Window>
